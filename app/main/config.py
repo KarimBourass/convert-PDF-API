@@ -7,7 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     DEBUG = False
-    MONGO_URI = "Hello my name is mario"
+    MONGO_URI = "Hmmmmmm"
 
 
 class DevelopmentConfig(Config):

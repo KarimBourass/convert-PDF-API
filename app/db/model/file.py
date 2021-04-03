@@ -6,3 +6,4 @@ class File(Document):
 
     id = None
     name = None
+    status = None

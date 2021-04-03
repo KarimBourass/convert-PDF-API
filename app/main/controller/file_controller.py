@@ -1,6 +1,8 @@
 from flask import request
 from flask_restplus import Resource
 
+
+
 from ..dto.file_dto import FileDto
 from ..service.file_service import get_all_files, save_new_file, get_a_file
 
@@ -18,12 +20,16 @@ class FileList(Resource):
 
     @api.response(201, 'File successfully created.')
     @api.doc('create a new File')
-    @api.expect(_file, validate=True)
+    @api.expect(_file)
     def post(self):
         """Creates a new File """
-        data = request.json
-        return save_new_file(data=data)
-    
+        data = request.form['name']
+        print('==============================')
+        print(data)
+        file = request.files["file"]
+        return save_new_file(data=data,file=file)
+
+
 @api.route('/<file_id>')
 @api.param('file_id', 'The File identifier')
 @api.response(404, 'File not found.')
