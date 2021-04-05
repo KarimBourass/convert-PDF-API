@@ -1,6 +1,11 @@
+import io
 import uuid
 
-from flask import send_file
+import base64
+from io import BytesIO
+
+import flask
+from flask import send_file, make_response
 
 from app.db.db import mongo
 
@@ -30,8 +35,8 @@ def get_all_files():
     return File.get_all()
 
 def get_a_file(file_name):
-    my_file = File(**{'name': file_name}).load()
-    if my_file.name:
-        return mongo.send_file(my_file.name)
-    else:
-        return {"status": "success", "message": "File not found."}, 404
+    resp = make_response(mongo.send_file(file_name))
+    resp.headers.set('Content-Disposition', 'attachment', filename='monpdf.pdf')
+    resp.headers.set('Content-Type', 'application/pdf')
+    #mon_pdf = mongo.send_file(file_name)
+    return resp

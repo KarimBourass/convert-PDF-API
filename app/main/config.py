@@ -7,8 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     DEBUG = False
-    MONGO_URI = "Hmmmmmm"
-
+    #MONGO_URI = "Hmmmmmm"
 
 class DevelopmentConfig(Config):
     # uncomment the line below to use postgres

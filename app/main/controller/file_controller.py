@@ -23,24 +23,21 @@ class FileList(Resource):
     @api.expect(_file)
     def post(self):
         """Creates a new File """
-        data = request.form['name']
-        print('==============================')
-        print(data)
-        file = request.files["file"]
-        return save_new_file(data=data,file=file)
+        try:
+            data = request.form['name']
+            file = request.files["file"]
+            return save_new_file(data=data,file=file)
+        except Exception:
+            {"status": 'fail', "message": 'Missing arguments'}, 409
 
 
-@api.route('/<file_id>')
-@api.param('file_id', 'The File identifier')
+
+@api.route('/<file_name>')
+@api.param('file_name', 'The File identifier')
 @api.response(404, 'File not found.')
 class File(Resource):
-
     @api.doc('get a file')
-    @api.marshal_with(_file)
-    def get(self, file_id):
+    def get(self, file_name):
         """get a file given its identifier"""
-        file = get_a_file(file_id)
-        if not file:
-            api.abort(404)
-        else:
-            return file
+        file = get_a_file(file_name)
+        return file
