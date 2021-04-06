@@ -1,11 +1,6 @@
-import io
 import uuid
 
-import base64
-from io import BytesIO
-
-import flask
-from flask import send_file, make_response
+from flask import  make_response
 
 from app.db.db import mongo
 
@@ -27,16 +22,14 @@ def save_new_file(data,file):
         return {"status": 'fail', "message": 'File name already used'}, 409
 
     new_file.save()
-
-    return {"file_name":data, "status": "success", "message": "File saved"}, 201
+    return {"file_id":data}
 
 
 def get_all_files():
     return File.get_all()
 
-def get_a_file(file_name):
-    resp = make_response(mongo.send_file(file_name))
-    resp.headers.set('Content-Disposition', 'attachment', filename='monpdf.pdf')
+def get_a_file(file_id):
+    resp = make_response(mongo.send_file(file_id))
+    resp.headers.set('Content-Disposition', 'attachment', filename='converter.pdf')
     resp.headers.set('Content-Type', 'application/pdf')
-    #mon_pdf = mongo.send_file(file_name)
     return resp

@@ -33,11 +33,12 @@ class FileList(Resource):
 
 
 @api.route('/<file_name>')
-@api.param('file_name', 'The File identifier')
+@api.param('file_name', 'The File name')
 @api.response(404, 'File not found.')
 class File(Resource):
     @api.doc('get a file')
-    def get(self, file_name):
+    def post(self, file_name):
         """get a file given its identifier"""
         file = get_a_file(file_name)
         return file
+
