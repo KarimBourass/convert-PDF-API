@@ -46,7 +46,11 @@ class File(Resource):
     @api.doc('delete a file')
     def delete(self, file_name):
         """delete a file given its name"""
-        delete_file(file_name)
+        try:
+            delete_file(file_name)
+            return {"status": 'success', "message": 'File deleted successfully'}, 201
+        except Exception:
+            return {"status": 'fail', "message": 'Missing file'}, 409
 
 
 
