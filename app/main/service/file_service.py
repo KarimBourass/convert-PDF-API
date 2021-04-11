@@ -1,5 +1,6 @@
 import uuid
 
+from bson import ObjectId
 from flask import  make_response
 
 from app.db.db import mongo
@@ -33,3 +34,6 @@ def get_a_file(file_id):
     resp.headers.set('Content-Disposition', 'attachment', filename='converter.pdf')
     resp.headers.set('Content-Type', 'application/pdf')
     return resp
+
+def delete_file(file_id):
+    mongo.db['convertPDF'].delete_one({"_id": ObjectId(file_id)})

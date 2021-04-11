@@ -4,7 +4,7 @@ from flask_restplus import Resource
 
 
 from ..dto.file_dto import FileDto
-from ..service.file_service import get_all_files, save_new_file, get_a_file
+from ..service.file_service import get_all_files, save_new_file, get_a_file, delete_file
 
 api = FileDto.api
 _file = FileDto.file
@@ -36,9 +36,17 @@ class FileList(Resource):
 @api.param('file_name', 'The File name')
 @api.response(404, 'File not found.')
 class File(Resource):
+
     @api.doc('get a file')
     def post(self, file_name):
         """get a file given its identifier"""
         file = get_a_file(file_name)
         return file
+
+    @api.doc('delete a file')
+    def delete(self, file_name):
+        """delete a file given its name"""
+        delete_file(file_name)
+
+
 
